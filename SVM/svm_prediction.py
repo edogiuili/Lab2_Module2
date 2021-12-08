@@ -115,7 +115,9 @@ def performance(ss_pred,test_class_list):
 directory = argv[1]
 C_list = [2,4]
 Y_list = [0.5,2]
+#modify the train_set with the entire training dataset (train_seqs.txt) after the CV procedure
 train_set = ["train0","train1","train2","train3","train4"]
+#the same for the test_set
 test_set = ["test4","test3","test2","test1","test0"]
 define_model(directory,C_list,Y_list,train_set,test_set)
 
