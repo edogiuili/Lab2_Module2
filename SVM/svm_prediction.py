@@ -40,33 +40,33 @@ def define_model(directory,C_list,Y_list,train_cv,test_cv):
    for C in C_list:
       for gamma in Y_list:
          MCC_same_param = 0
-         for i in range(len(train_cv)):
-            train_set = train_cv[i]
-            test_set = test_cv[i]
-            test_class_list,test_feature_list = create_matrices(test_set,directory)
-            model_file = train_set+"_"+"C"+str(C)+"_"+"y"+str(gamma)+".pkl.gz"
-            print(model_file)
+       
+         train_set = train_cv[i]
+         test_set = test_cv[i]
+         test_class_list,test_feature_list = create_matrices(test_set,directory)
+         model_file = train_set+"_"+"C"+str(C)+"_"+"y"+str(gamma)+".pkl.gz"
+         print(model_file)
 
-            #predict the ss
-            print("Predicting the secondary structures in "+test_set)
-            mySVC = pickle.load(gzip.open(model_file,"r"))
-            ss_pred = mySVC.predict(test_feature_list)
+         #predict the ss
+         print("Predicting the secondary structures in "+test_set)
+         mySVC = pickle.load(gzip.open(model_file,"r"))
+         ss_pred = mySVC.predict(test_feature_list)
 
-            #compute the performance of this pair of parameters
-            print("Computing the performances in "+model_file)
-            MCC_avg,MCC_H,MCC_E,MCC_C,Q3,PPV,recall = performance(ss_pred,test_class_list)
-            print("MCC_H: ",MCC_H)
-            print("MCC_E: ",MCC_E)
-            print("MCC_C: ",MCC_C)
-            print("Q3: ",Q3)
-            print("PPV: ",PPV)
-            print("TPR: ",recall)
-            MCC_same_param += MCC_avg
+         #compute the performance of this pair of parameters
+         print("Computing the performances in "+model_file)
+         MCC_avg,MCC_H,MCC_E,MCC_C,Q3,PPV,recall = performance(ss_pred,test_class_list)
+         print("MCC_H: ",MCC_H)
+         print("MCC_E: ",MCC_E)
+         print("MCC_C: ",MCC_C)
+         print("Q3: ",Q3)
+         print("PPV: ",PPV)
+         print("TPR: ",recall)
+         MCC_same_param += MCC_avg
 
-         mcc = "MCC_"+str(C)+"_"+str(gamma)
-         avg_MCC_same_param = MCC_same_param/len(train_cv)
-         print(mcc+":"+str(avg_MCC_same_param)+"\n")
-         performances_dict[mcc] = avg_MCC_same_param
+      mcc = "MCC_"+str(C)+"_"+str(gamma)
+      avg_MCC_same_param = MCC_same_param/len(train_cv)
+      print(mcc+":"+str(avg_MCC_same_param)+"\n")
+      performances_dict[mcc] = avg_MCC_same_param
 
    max_key = max(performances_dict, key=performances_dict.get)
    print(max_key)
@@ -115,10 +115,10 @@ def performance(ss_pred,test_class_list):
 directory = argv[1]
 C_list = [2,4]
 Y_list = [0.5,2]
-#modify the train_set with the entire training dataset (train_seqs.txt) after the CV procedure
-train_set = ["train0","train1","train2","train3","train4"]
-#the same for the test_set
-test_set = ["test4","test3","test2","test1","test0"]
-define_model(directory,C_list,Y_list,train_set,test_set)
-
+#specify the dataset for training
+train_set = argv[2]
+#specify the dataset for testing
+test_set = argv[3]
+MCC_Mean, MCC_H, MCC_E, MCC_C, Q3, Precision, Recall = define_model(directory,C_list,Y_list,train_set,test_set)
+print(MCC_Mean, MCC_H, MCC_E, MCC_C, Q3, Precision, Recall)
 
