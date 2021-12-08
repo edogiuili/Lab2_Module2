@@ -35,10 +35,10 @@ def create_matrices(file,directory):
          pass
    return class_list,feature_list
 
-def define_model(directory,C_list,Y_list,train_cv):
+def define_model(directory,C_list,Y_list,train_set):
    for C in C_list:
       for gamma in Y_list:
-         for i in range(len(train_cv)):
+         for i in range(len(train_set)):
             train_set = train_cv[i]
             train_class_list,train_feature_list = create_matrices(train_set,directory)
             #create an SVC model
@@ -53,5 +53,5 @@ def define_model(directory,C_list,Y_list,train_cv):
 directory = argv[1]
 C_list = [2,4]
 Y_list = [0.5,2]
-train_set = ["train0","train1","train2","train3","train4"]
+train_set = [argv[2]]
 define_model(directory,C_list,Y_list,train_set)
