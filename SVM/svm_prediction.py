@@ -35,14 +35,12 @@ def create_matrices(file,directory):
    return class_list,feature_list
 
 
-def define_model(directory,C_list,Y_list,train_cv,test_cv):
+def define_model(directory,C_list,Y_list,train_set,test_set):
    performances_dict = {}
    for C in C_list:
       for gamma in Y_list:
          MCC_same_param = 0
-       
-         train_set = train_cv[i]
-         test_set = test_cv[i]
+         
          test_class_list,test_feature_list = create_matrices(test_set,directory)
          model_file = train_set+"_"+"C"+str(C)+"_"+"y"+str(gamma)+".pkl.gz"
          print(model_file)
