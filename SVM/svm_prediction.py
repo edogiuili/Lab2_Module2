@@ -119,6 +119,6 @@ Y_list = [0.5,2]
 train_set = argv[2]
 #specify the dataset for testing
 test_set = argv[3]
-MCC_Mean, MCC_H, MCC_E, MCC_C, Q3, Precision, Recall = define_model(directory,C_list,Y_list,train_set,test_set)
-print(MCC_Mean, MCC_H, MCC_E, MCC_C, Q3, Precision, Recall)
+define_model(directory,C_list,Y_list,train_set,test_set)
+
 
