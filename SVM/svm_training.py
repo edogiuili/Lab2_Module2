@@ -35,12 +35,12 @@ def create_matrices(file,directory):
          pass
    return class_list,feature_list
 
-def define_model(directory,C_list,Y_list,train_cv):
+def define_model(directory,C_list,Y_list,train_set):
    for C in C_list:
       for gamma in Y_list:
          for i in range(len(train_cv)):
-            train_set = train_cv[i]
-            train_class_list,train_feature_list = create_matrices(train_set,directory)
+            train_split = train_set[i]
+            train_class_list,train_feature_list = create_matrices(train_split,directory)
             #create an SVC model
             mySVC = svm.SVC(C=C,kernel='rbf',gamma=gamma)
             #train the SVC model
